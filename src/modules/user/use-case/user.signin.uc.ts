@@ -2,7 +2,11 @@ import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Hasher } from 'src/core/cryptography'
 import { BusinessException } from 'src/core/exception'
-import { User, UserSignUpGateway } from 'src/core/user'
+import {
+  UserSignUpGateway,
+  UserWithNoPassword,
+  UserWithRequiredFields,
+} from 'src/core/user'
 import { UserRepository } from 'src/database/user/user.repository'
 import { CryptographyModule } from 'src/modules/cryptography'
 
@@ -15,9 +19,7 @@ export class UserSignUpUC implements UserSignUpGateway {
     private readonly hasher: Hasher,
   ) {}
 
-  async execute(
-    params: Pick<User, 'email' | 'password'>,
-  ): Promise<Omit<User, 'password'>> {
+  async execute(params: UserWithRequiredFields): Promise<UserWithNoPassword> {
     const { email, password } = params
     const userWithSameUsername = await this.repository.findOne({ email })
 

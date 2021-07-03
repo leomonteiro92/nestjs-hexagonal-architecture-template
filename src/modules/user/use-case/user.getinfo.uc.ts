@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { BusinessException } from 'src/core/exception'
-import { User, UserGetInfoGateway } from 'src/core/user'
+import { UserGetInfoGateway, UserWithNoPassword } from 'src/core/user'
 import { UserRepository } from 'src/database/user/user.repository'
 
 @Injectable()
@@ -11,7 +11,7 @@ export class UserGetInfoUC implements UserGetInfoGateway {
     private readonly repository: UserRepository,
   ) {}
 
-  async execute(email: string): Promise<Omit<User, 'password'>> {
+  async execute(email: string): Promise<UserWithNoPassword> {
     const existingUser = await this.repository.findOne({ email })
 
     if (!existingUser) {

@@ -1,4 +1,5 @@
 import { Column, Entity } from 'typeorm'
+import { Exclude } from 'class-transformer'
 
 import { User } from 'src/core/user'
 import { CustomBaseEntity } from 'src/database/base.entity'
@@ -8,6 +9,7 @@ export class UserEntity extends CustomBaseEntity implements User {
   @Column({ unique: true })
   email: string
 
+  @Exclude()
   @Column()
   password: string
 

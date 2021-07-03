@@ -1,5 +1,10 @@
 import { Body, Controller, Inject, Post } from '@nestjs/common'
-import { User, UserSignInGateway, UserSignUpGateway } from 'src/core/user'
+import {
+  UserSignInGateway,
+  UserSignUpGateway,
+  UserWithNoPassword,
+  UserWithRequiredFields,
+} from 'src/core/user'
 import { USER_SIGNIN, USER_SIGNUP } from './constants'
 
 @Controller('/users')
@@ -12,16 +17,12 @@ export class UserController {
   ) {}
 
   @Post('/signup')
-  signUp(
-    @Body() input: Pick<User, 'email' | 'password'>,
-  ): Promise<Omit<User, 'password'>> {
+  signUp(@Body() input: UserWithRequiredFields): Promise<UserWithNoPassword> {
     return this.userSignUp.execute(input)
   }
 
   @Post('/signin')
-  signIn(
-    @Body() input: Pick<User, 'email' | 'password'>,
-  ): Promise<Omit<User, 'password'>> {
+  signIn(@Body() input: UserWithRequiredFields): Promise<UserWithNoPassword> {
     return this.userSignIn.execute(input)
   }
 }

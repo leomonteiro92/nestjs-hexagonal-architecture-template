@@ -3,7 +3,11 @@ import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { HashComparator } from 'src/core/cryptography'
 import { BusinessException } from 'src/core/exception'
-import { User, UserSignInGateway } from 'src/core/user'
+import {
+  UserSignInGateway,
+  UserWithNoPassword,
+  UserWithRequiredFields,
+} from 'src/core/user'
 import { UserRepository } from 'src/database/user/user.repository'
 import { CryptographyModule } from 'src/modules/cryptography'
 
@@ -16,9 +20,7 @@ export class UserSignInUC implements UserSignInGateway {
     private readonly hashComparator: HashComparator,
   ) {}
 
-  async execute(
-    params: Pick<User, 'email' | 'password'>,
-  ): Promise<Omit<User, 'password'>> {
+  async execute(params: UserWithRequiredFields): Promise<UserWithNoPassword> {
     const { email, password } = params
     const existingUser = await this.repository.findOne({ email })
 

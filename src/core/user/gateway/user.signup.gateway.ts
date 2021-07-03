@@ -1,8 +1,6 @@
 import { BaseGateway } from 'src/core/base.gateway'
-import { User } from '../user.model'
+import { UserWithNoPassword, UserWithRequiredFields } from '../user.model'
 
 export interface UserSignUpGateway extends BaseGateway {
-  execute(
-    params: Pick<User, 'email' | 'password'>,
-  ): Promise<Omit<User, 'password'>>
+  execute(params: UserWithRequiredFields): Promise<UserWithNoPassword>
 }
