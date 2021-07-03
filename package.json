@@ -29,6 +29,7 @@
     "apollo-server-fastify": "^2.25.2",
     "bcrypt": "^5.0.1",
     "class-transformer": "^0.4.0",
+    "class-validator": "^0.13.1",
     "graphql": "^15.5.1",
     "graphql-tools": "^7.0.5",
     "pg": "^8.6.0",

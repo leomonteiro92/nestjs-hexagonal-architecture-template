@@ -1,5 +1,9 @@
-import { ClassSerializerInterceptor, Module } from '@nestjs/common'
-import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core'
+import {
+  ClassSerializerInterceptor,
+  Module,
+  ValidationPipe,
+} from '@nestjs/common'
+import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE, Reflector } from '@nestjs/core'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { GraphQLModule } from '@nestjs/graphql'
 import { HttpExceptionFilter } from './modules/http/http-exception.filter'
@@ -19,10 +23,6 @@ import { join } from 'path'
     {
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
-    },
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: ClassSerializerInterceptor,
     },
   ],
 })

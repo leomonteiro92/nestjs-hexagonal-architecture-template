@@ -1,10 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common'
-
 import { InjectRepository } from '@nestjs/typeorm'
-import { HashComparator } from 'src/core/cryptography'
+import { Hasher } from 'src/core/cryptography'
 import { BusinessException } from 'src/core/exception'
 import {
-  UserSignInGateway,
+  UserSignUpGateway,
   UserWithNoPassword,
   UserWithRequiredFields,
 } from 'src/core/user'
@@ -12,31 +11,29 @@ import { UserRepository } from 'src/database/user/user.repository'
 import { CryptographyModule } from 'src/modules/cryptography'
 
 @Injectable()
-export class UserSignInUC implements UserSignInGateway {
+export class UserSignUpUC implements UserSignUpGateway {
   constructor(
     @InjectRepository(UserRepository)
     private readonly repository: UserRepository,
     @Inject(CryptographyModule.BCRYPT_ADAPTER)
-    private readonly hashComparator: HashComparator,
+    private readonly hasher: Hasher,
   ) {}
 
   async execute(params: UserWithRequiredFields): Promise<UserWithNoPassword> {
-    const { email, password } = params
-    const existingUser = await this.repository.findOne({ email })
+    const { email, _password } = params
+    const userWithSameUsername = await this.repository.findOne({ email })
 
-    if (!existingUser) {
-      throw new BusinessException(`User not found with username ${email}`)
+    if (!!userWithSameUsername) {
+      throw new BusinessException('Username already picked')
     }
 
-    const isValidPassword = await this.hashComparator.compare(
-      password,
-      existingUser.password,
-    )
+    const hashedPassword = await this.hasher.hash(_password)
 
-    if (!isValidPassword) {
-      throw new BusinessException('Invalid password, try again')
-    }
+    const result = await this.repository.save({
+      ...params,
+      _password: hashedPassword,
+    })
 
-    return existingUser
+    return result
   }
 }

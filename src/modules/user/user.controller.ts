@@ -17,12 +17,18 @@ export class UserController {
   ) {}
 
   @Post('/signup')
-  signUp(@Body() input: UserWithRequiredFields): Promise<UserWithNoPassword> {
-    return this.userSignUp.execute(input)
+  async signUp(
+    @Body() input: UserWithRequiredFields,
+  ): Promise<UserWithNoPassword> {
+    const result = await this.userSignUp.execute(input)
+    return result as UserWithNoPassword
   }
 
   @Post('/signin')
-  signIn(@Body() input: UserWithRequiredFields): Promise<UserWithNoPassword> {
-    return this.userSignIn.execute(input)
+  async signIn(
+    @Body() input: UserWithRequiredFields,
+  ): Promise<UserWithNoPassword> {
+    const result = await this.userSignIn.execute(input)
+    return result as UserWithNoPassword
   }
 }
