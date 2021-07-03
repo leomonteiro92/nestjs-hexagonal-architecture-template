@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Hasher } from 'src/core/cryptography'
+import { BusinessException } from 'src/core/exception'
 import { User, UserSignUpGateway } from 'src/core/user'
 import { UserRepository } from 'src/database/user/user.repository'
 import { CryptographyModule } from 'src/modules/cryptography'
@@ -21,7 +22,7 @@ export class UserSignUpUC implements UserSignUpGateway {
     const userWithSameUsername = await this.repository.findOne({ email })
 
     if (!!userWithSameUsername) {
-      throw new Error('Username already picked')
+      throw new BusinessException('Username already picked')
     }
 
     const hashedPassword = await this.hasher.hash(password)

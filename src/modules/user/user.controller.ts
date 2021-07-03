@@ -12,12 +12,16 @@ export class UserController {
   ) {}
 
   @Post('/signup')
-  signUp(@Body() input: User): Promise<Omit<User, 'password'>> {
+  signUp(
+    @Body() input: Pick<User, 'email' | 'password'>,
+  ): Promise<Omit<User, 'password'>> {
     return this.userSignUp.execute(input)
   }
 
   @Post('/signin')
-  signIn(@Body() input: User): Promise<Omit<User, 'password'>> {
+  signIn(
+    @Body() input: Pick<User, 'email' | 'password'>,
+  ): Promise<Omit<User, 'password'>> {
     return this.userSignIn.execute(input)
   }
 }

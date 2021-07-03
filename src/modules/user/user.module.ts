@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { UserRepository } from 'src/database/user/user.repository'
+import { UserRepository } from 'src/database/user'
 import { CryptographyModule } from '../cryptography'
 import { USER_SIGNIN, USER_SIGNUP } from './constants'
 import { UserSignUpUC } from './use-case/user.signin.uc'
