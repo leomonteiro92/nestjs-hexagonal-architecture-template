@@ -1,16 +1,16 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity } from 'typeorm'
 
-import { User } from 'src/core/user';
-import { CustomBaseEntity } from 'src/database/base.entity';
+import { User } from 'src/core/user'
+import { CustomBaseEntity } from 'src/database/base.entity'
 
 @Entity('users')
 export class UserEntity extends CustomBaseEntity implements User {
   @Column({ unique: true })
-  email: string;
+  email: string
 
   @Column()
-  password: string;
+  password: string
 
   @Column()
-  blocked: boolean;
+  blocked: boolean
 }

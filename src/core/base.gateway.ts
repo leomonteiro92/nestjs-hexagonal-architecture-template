@@ -1,3 +1,3 @@
 export interface BaseGateway {
-  execute: any;
+  execute: any
 }

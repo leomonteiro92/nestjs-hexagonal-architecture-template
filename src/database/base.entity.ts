@@ -3,15 +3,15 @@ import {
   CreateDateColumn,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from 'typeorm';
+} from 'typeorm'
 
 export abstract class CustomBaseEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id: string
 
   @CreateDateColumn({ name: 'createdAt', type: 'timestamptz' })
-  createdAt: Date;
+  createdAt: Date
 
   @UpdateDateColumn({ name: 'updatedAt', type: 'timestamptz' })
-  updatedAt: Date;
+  updatedAt: Date
 }

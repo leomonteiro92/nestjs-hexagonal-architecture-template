@@ -1,9 +1,9 @@
-import { BaseModel } from '../base.model';
+import { BaseModel } from '../base.model'
 
 export interface User extends BaseModel {
-  email: string;
+  email: string
 
-  password: string;
+  password: string
 
-  blocked: boolean;
+  blocked: boolean
 }

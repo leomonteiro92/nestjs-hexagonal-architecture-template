@@ -1,7 +1,7 @@
 export interface BaseModel {
-  id: string | number;
+  id: string | number
 
-  createdAt: Date;
+  createdAt: Date
 
-  updatedAt: Date;
+  updatedAt: Date
 }

@@ -1,10 +1,10 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common'
 
-import { InjectRepository } from '@nestjs/typeorm';
-import { HashComparator } from 'src/core/cryptography';
-import { User, UserSignInGateway } from 'src/core/user';
-import { UserRepository } from 'src/database/user/user.repository';
-import { CryptographyModule } from 'src/modules/cryptography';
+import { InjectRepository } from '@nestjs/typeorm'
+import { HashComparator } from 'src/core/cryptography'
+import { User, UserSignInGateway } from 'src/core/user'
+import { UserRepository } from 'src/database/user/user.repository'
+import { CryptographyModule } from 'src/modules/cryptography'
 
 @Injectable()
 export class UserSignInUC implements UserSignInGateway {
@@ -18,25 +18,22 @@ export class UserSignInUC implements UserSignInGateway {
   async execute(
     params: Pick<User, 'email' | 'password'>,
   ): Promise<Omit<User, 'password'>> {
-    const { email, password } = params;
-    const existingUser = await this.repository.findOne({ email });
+    const { email, password } = params
+    const existingUser = await this.repository.findOne({ email })
 
     if (!existingUser) {
-      throw new Error(`User not found with username ${email}`);
+      throw new Error(`User not found with username ${email}`)
     }
-
-    console.log(password);
-    console.log(existingUser.password);
 
     const isValidPassword = await this.hashComparator.compare(
       password,
       existingUser.password,
-    );
+    )
 
     if (!isValidPassword) {
-      throw new Error('Invalid password, try again');
+      throw new Error('Invalid password, try again')
     }
 
-    return existingUser;
+    return existingUser
   }
 }
