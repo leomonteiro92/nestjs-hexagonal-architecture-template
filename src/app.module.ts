@@ -3,7 +3,7 @@ import {
   Module,
   ValidationPipe,
 } from '@nestjs/common'
-import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE, Reflector } from '@nestjs/core'
+import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { GraphQLModule } from '@nestjs/graphql'
 import { HttpExceptionFilter } from './modules/http/http-exception.filter'

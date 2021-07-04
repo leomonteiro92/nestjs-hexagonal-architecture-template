@@ -7,10 +7,3 @@ export interface User extends BaseModel {
 
   blocked: boolean
 }
-
-export type UserWithNoPassword = Omit<User, '_password'>
-
-export type UserWithRequiredFields = Pick<
-  User,
-  'email' | '_password' | 'blocked'
->

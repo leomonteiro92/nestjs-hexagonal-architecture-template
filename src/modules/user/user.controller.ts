@@ -1,12 +1,16 @@
-import { Body, Controller, Inject, Post } from '@nestjs/common'
 import {
-  UserSignInGateway,
-  UserSignUpGateway,
-  UserWithNoPassword,
-  UserWithRequiredFields,
-} from 'src/core/user'
+  Body,
+  ClassSerializerInterceptor,
+  Controller,
+  Inject,
+  Post,
+  UseInterceptors,
+} from '@nestjs/common'
+import { UserSignInGateway, UserSignUpGateway } from 'src/core/user'
+import { UserDTO } from 'src/core/user/user.dto'
 import { USER_SIGNIN, USER_SIGNUP } from './constants'
 
+@UseInterceptors(ClassSerializerInterceptor)
 @Controller('/users')
 export class UserController {
   constructor(
@@ -17,18 +21,12 @@ export class UserController {
   ) {}
 
   @Post('/signup')
-  async signUp(
-    @Body() input: UserWithRequiredFields,
-  ): Promise<UserWithNoPassword> {
-    const result = await this.userSignUp.execute(input)
-    return result as UserWithNoPassword
+  signUp(@Body() input: UserDTO): Promise<UserDTO> {
+    return this.userSignUp.execute(input)
   }
 
   @Post('/signin')
-  async signIn(
-    @Body() input: UserWithRequiredFields,
-  ): Promise<UserWithNoPassword> {
-    const result = await this.userSignIn.execute(input)
-    return result as UserWithNoPassword
+  signIn(@Body() input: UserDTO): Promise<UserDTO> {
+    return this.userSignIn.execute(input)
   }
 }

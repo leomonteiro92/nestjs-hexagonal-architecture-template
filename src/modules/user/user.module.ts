@@ -7,7 +7,7 @@ import { UserGetInfoUC } from './use-case/user.getinfo.uc'
 import { UserSignUpUC } from './use-case/user.signup.uc'
 import { UserSignInUC } from './use-case/user.signin.uc'
 import { UserController } from './user.controller'
-import { UserResolver } from './user.resolve'
+import { UserResolver } from './user.resolver'
 
 @Module({
   imports: [CryptographyModule, TypeOrmModule.forFeature([UserRepository])],
