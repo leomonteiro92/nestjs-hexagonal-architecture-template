@@ -8,7 +8,7 @@ import {
   UseGuards,
 } from '@nestjs/common'
 import { UserDTO, UserSignUpGateway, USER_SIGNUP } from 'src/core/user'
-import { JwtAuthGuard } from '../authentication/guards/jwt-auth.guard'
+import { JwtAuthGuard } from '../guards/jwt-auth.guard'
 import { BaseController } from '../base.controller'
 import { IsPublic } from '../decorators'
 

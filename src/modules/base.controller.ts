@@ -5,7 +5,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common'
-import { JwtAuthGuard } from './authentication/guards/jwt-auth.guard'
+import { JwtAuthGuard } from './guards/jwt-auth.guard'
 import { HttpExceptionFilter } from './http/http-exception.filter'
 
 @SerializeOptions({

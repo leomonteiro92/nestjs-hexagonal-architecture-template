@@ -9,7 +9,6 @@ import { UserSignInUC } from '../user/use-case/user.signin.uc'
 import { AuthenticationController } from './authentication.controller'
 import { AuthenticationService } from './authentication.service'
 import { JWT_EXPIRES_IN, JWT_SECRET } from './constants'
-import { JwtAuthGuard } from './guards/jwt-auth.guard'
 import { JwtStrategy } from './jwt.strategy'
 
 @Module({
@@ -24,7 +23,6 @@ import { JwtStrategy } from './jwt.strategy'
   ],
   providers: [
     JwtStrategy,
-    JwtAuthGuard,
     AuthenticationService,
     {
       provide: USER_SIGNIN,

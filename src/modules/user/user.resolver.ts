@@ -1,7 +1,7 @@
 import { Inject, UseGuards } from '@nestjs/common'
 import { Args, Query, Resolver } from '@nestjs/graphql'
 import { UserGetInfoGateway, USER_GETINFO } from 'src/core/user'
-import { GqlAuthGuard } from '../authentication/guards/gql-auth.guard'
+import { GqlAuthGuard } from '../guards/gql-auth.guard'
 import { CurrentUser } from '../decorators/current-user'
 import { UserType } from './user.type'
 
