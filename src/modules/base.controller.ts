@@ -2,8 +2,10 @@ import {
   ClassSerializerInterceptor,
   SerializeOptions,
   UseFilters,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common'
+import { JwtAuthGuard } from './authentication/guards/jwt-auth.guard'
 import { HttpExceptionFilter } from './http/http-exception.filter'
 
 @SerializeOptions({
@@ -12,4 +14,5 @@ import { HttpExceptionFilter } from './http/http-exception.filter'
 })
 @UseInterceptors(ClassSerializerInterceptor)
 @UseFilters(new HttpExceptionFilter())
+@UseGuards(JwtAuthGuard)
 export abstract class BaseController {}

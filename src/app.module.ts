@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { GraphQLModule } from '@nestjs/graphql'
 
 import { UserModule } from './modules/user/user.module'
+import { AuthenticationModule } from './modules/authentication/authentication.module'
 @Module({
   imports: [
     TypeOrmModule.forRoot(),
@@ -12,6 +13,8 @@ import { UserModule } from './modules/user/user.module'
       playground: true,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
+
+    AuthenticationModule,
     UserModule,
   ],
 })

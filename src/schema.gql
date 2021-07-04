@@ -4,10 +4,10 @@
 
 type UserType {
   email: String!
-  blocked: Boolean!
+  blocked: Boolean
   id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime
+  updatedAt: DateTime
 }
 
 """
@@ -17,4 +17,5 @@ scalar DateTime
 
 type Query {
   getInfo(email: String!): UserType!
+  me: UserType!
 }

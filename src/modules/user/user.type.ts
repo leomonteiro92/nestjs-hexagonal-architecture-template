@@ -7,15 +7,15 @@ export class UserType implements Omit<User, 'password'> {
   @Field()
   email: string
 
-  @Field()
+  @Field({ nullable: true })
   blocked: boolean
 
   @Field(() => ID)
   id: string | number
 
-  @Field(() => GraphQLISODateTime)
+  @Field(() => GraphQLISODateTime, { nullable: true })
   createdAt: Date
 
-  @Field(() => GraphQLISODateTime)
+  @Field(() => GraphQLISODateTime, { nullable: true })
   updatedAt: Date
 }
