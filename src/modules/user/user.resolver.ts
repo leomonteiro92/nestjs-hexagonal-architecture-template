@@ -11,11 +11,6 @@ export class UserResolver {
     private readonly userGetInfo: UserGetInfoGateway,
   ) {}
 
-  @Query(() => String)
-  hello(): string {
-    return 'Hello World'
-  }
-
   @Query(() => UserType)
   getInfo(@Args('email') email: string): Promise<UserType> {
     return this.userGetInfo.execute(email)
