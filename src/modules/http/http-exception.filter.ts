@@ -10,8 +10,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const request = ctx.getRequest()
     const statusCode = exception.getCode()
 
-    console.log(exception)
-
     response.status(HttpStatus.BAD_REQUEST).send({
       message: exception.message,
       statusCode,

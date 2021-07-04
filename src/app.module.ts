@@ -1,14 +1,9 @@
-import {
-  ClassSerializerInterceptor,
-  Module,
-  ValidationPipe,
-} from '@nestjs/common'
-import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core'
+import { join } from 'path'
+import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { GraphQLModule } from '@nestjs/graphql'
-import { HttpExceptionFilter } from './modules/http/http-exception.filter'
+
 import { UserModule } from './modules/user/user.module'
-import { join } from 'path'
 @Module({
   imports: [
     TypeOrmModule.forRoot(),
@@ -18,12 +13,6 @@ import { join } from 'path'
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
     UserModule,
-  ],
-  providers: [
-    {
-      provide: APP_FILTER,
-      useClass: HttpExceptionFilter,
-    },
   ],
 })
 export class AppModule {}

@@ -1,24 +1,23 @@
+import { Body, Controller, Inject, Post } from '@nestjs/common'
 import {
-  Body,
-  ClassSerializerInterceptor,
-  Controller,
-  Inject,
-  Post,
-  UseInterceptors,
-} from '@nestjs/common'
-import { UserSignInGateway, UserSignUpGateway } from 'src/core/user'
-import { UserDTO } from 'src/core/user/user.dto'
-import { USER_SIGNIN, USER_SIGNUP } from './constants'
+  UserDTO,
+  UserSignInGateway,
+  UserSignUpGateway,
+  USER_SIGNIN,
+  USER_SIGNUP,
+} from 'src/core/user'
+import { BaseController } from '../base.controller'
 
-@UseInterceptors(ClassSerializerInterceptor)
 @Controller('/users')
-export class UserController {
+export class UserController extends BaseController {
   constructor(
     @Inject(USER_SIGNIN)
     private readonly userSignIn: UserSignInGateway,
     @Inject(USER_SIGNUP)
     private readonly userSignUp: UserSignUpGateway,
-  ) {}
+  ) {
+    super()
+  }
 
   @Post('/signup')
   signUp(@Body() input: UserDTO): Promise<UserDTO> {
