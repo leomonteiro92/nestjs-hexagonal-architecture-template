@@ -1,4 +1,3 @@
-import { HttpStatus } from '@nestjs/common'
 import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common'
 import { BusinessException } from 'src/core/exception'
 
@@ -10,7 +9,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const request = ctx.getRequest()
     const statusCode = exception.getCode()
 
-    response.status(HttpStatus.BAD_REQUEST).send({
+    response.status(statusCode).send({
       message: exception.message,
       statusCode,
       timestamp: new Date().toISOString(),

@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common'
 import { AuthenticationDTO } from 'src/core/authentication'
 import { UserDTO } from 'src/core/user'
-import { LoginUseCase } from 'src/use-case/authentication/login.use-case'
+import { LoginUseCase } from 'src/use-case/authentication/login.interactor'
 import { BaseController } from '../base.controller'
 import { IsPublic } from '../decorators'
 
