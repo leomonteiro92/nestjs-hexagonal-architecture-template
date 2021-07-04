@@ -8,7 +8,7 @@ export class UserDTO implements User {
   @IsEmail()
   email: string
 
-  _password: string
+  password: string
 
   blocked: boolean
 

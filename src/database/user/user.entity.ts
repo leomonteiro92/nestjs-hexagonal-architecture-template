@@ -10,7 +10,7 @@ export class UserEntity extends CustomBaseEntity implements User {
 
   @Exclude()
   @Column({ name: 'password' })
-  _password: string
+  password: string
 
   @Column()
   blocked: boolean

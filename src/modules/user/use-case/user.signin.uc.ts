@@ -17,7 +17,7 @@ export class UserSignInUC implements UserSignInGateway {
   ) {}
 
   async execute(params: UserDTO): Promise<UserDTO> {
-    const { email, _password } = params
+    const { email, password } = params
     const existingUser = await this.repository.findOne({ email })
 
     if (!existingUser) {
@@ -25,8 +25,8 @@ export class UserSignInUC implements UserSignInGateway {
     }
 
     const isValidPassword = await this.hashComparator.compare(
-      _password,
-      existingUser._password,
+      password,
+      existingUser.password,
     )
 
     if (!isValidPassword) {

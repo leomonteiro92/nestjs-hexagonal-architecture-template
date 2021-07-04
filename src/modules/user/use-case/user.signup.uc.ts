@@ -15,22 +15,20 @@ export class UserSignUpUC implements UserSignUpGateway {
     private readonly hasher: Hasher,
   ) {}
 
-  async execute(
-    params: Pick<UserDTO, 'email' | '_password'>,
-  ): Promise<UserDTO> {
-    const { email, _password } = params
+  async execute(params: Pick<UserDTO, 'email' | 'password'>): Promise<UserDTO> {
+    const { email, password } = params
     const userWithSameUsername = await this.repository.findOne({ email })
 
     if (!!userWithSameUsername) {
       throw new BusinessException('Username already picked')
     }
 
-    const hashedPassword = await this.hasher.hash(_password)
+    const hashedPassword = await this.hasher.hash(password)
 
     const result = await this.repository.save({
       ...params,
       blocked: false,
-      _password: hashedPassword,
+      password: hashedPassword,
     })
 
     return new UserDTO(result)
