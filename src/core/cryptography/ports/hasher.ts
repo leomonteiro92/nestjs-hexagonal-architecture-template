@@ -2,4 +2,4 @@ export interface Hasher {
   hash(plainText: string): Promise<string>
 }
 
-export abstract class Hasher {}
+export const HASHER_INTERFACE = 'Hasher'
