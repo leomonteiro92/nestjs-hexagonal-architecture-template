@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { UserRepository } from 'src/database/user'
 import { UserController } from 'src/presentation/user/user.controller'
 import { UserResolver } from 'src/presentation/user/user.resolver'
 import {
@@ -13,6 +12,7 @@ import { FIND_USER_BY_EMAIL_PORT } from 'src/core/user/ports/find-user-by-email.
 import { FindUserByEmailAdapter } from 'src/infrastructure/database/user/adapters/find-user.adapter'
 import { CREATE_USER_PORT } from 'src/core/user/ports/create-user.port'
 import { CreateUserAdapter } from 'src/infrastructure/database/user/adapters/create-user.adapter'
+import { UserRepository } from 'src/infrastructure/database/user'
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserRepository])],
