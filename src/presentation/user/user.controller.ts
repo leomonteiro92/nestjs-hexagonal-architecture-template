@@ -1,14 +1,12 @@
-import { Body, Controller, Get, Inject, Post, Request } from '@nestjs/common'
-import { UserDTO, UserSignUpGateway, USER_SIGNUP } from 'src/core/user'
+import { Body, Controller, Get, Post, Request } from '@nestjs/common'
+import { UserDTO } from 'src/core/user'
+import { UserSignUpUseCase } from 'src/use-case/user'
 import { BaseController } from '../base.controller'
 import { IsPublic } from '../decorators'
 
 @Controller('/users')
 export class UserController extends BaseController {
-  constructor(
-    @Inject(USER_SIGNUP)
-    private readonly userSignUp: UserSignUpGateway,
-  ) {
+  constructor(private readonly userSignUp: UserSignUpUseCase) {
     super()
   }
 

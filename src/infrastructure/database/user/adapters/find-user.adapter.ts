@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { User } from 'src/core/user'
-import { FindUserPort } from 'src/use-case/user'
+import { FindUserByEmailPort } from 'src/core/user/ports/find-user-by-email.port'
 import { UserRepository } from '../user.repository'
 
 @Injectable()
-export class FindUserAdapter implements FindUserPort {
+export class FindUserByEmailAdapter implements FindUserByEmailPort {
   constructor(
     @InjectRepository(UserRepository)
     private readonly repository: UserRepository,

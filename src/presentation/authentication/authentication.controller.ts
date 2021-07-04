@@ -1,13 +1,13 @@
 import { Body, Controller, Post } from '@nestjs/common'
+import { AuthenticationDTO } from 'src/core/authentication'
 import { UserDTO } from 'src/core/user'
+import { LoginUseCase } from 'src/use-case/authentication/login.use-case'
 import { BaseController } from '../base.controller'
 import { IsPublic } from '../decorators'
-import { AuthenticationDTO } from './authentication.dto'
-import { AuthenticationService } from './authentication.service'
 
 @Controller('auth')
 export class AuthenticationController extends BaseController {
-  constructor(private readonly authenticationService: AuthenticationService) {
+  constructor(private readonly loginUseCase: LoginUseCase) {
     super()
   }
 
@@ -16,6 +16,6 @@ export class AuthenticationController extends BaseController {
   async login(
     @Body() input: Pick<UserDTO, 'email' | 'password'>,
   ): Promise<AuthenticationDTO> {
-    return this.authenticationService.login(input)
+    return this.loginUseCase.execute(input)
   }
 }

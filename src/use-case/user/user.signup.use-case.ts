@@ -1,18 +1,27 @@
-import { Injectable } from '@nestjs/common'
-import { Hasher } from 'src/core/cryptography'
+import { Inject, Injectable } from '@nestjs/common'
+import { Hasher, HASHER_INTERFACE } from 'src/core/cryptography'
 import { BusinessException } from 'src/core/exception'
 import { UserDTO } from 'src/core/user'
-import { CreateUserPort } from 'src/core/user/ports/create-user.port'
+import {
+  CreateUserPort,
+  CREATE_USER_PORT,
+} from 'src/core/user/ports/create-user.port'
+import {
+  FindUserByEmailPort,
+  FIND_USER_BY_EMAIL_PORT,
+} from 'src/core/user/ports/find-user-by-email.port'
 import { BaseUseCase } from '../base.use-case'
-import { FindUserPort } from './ports'
 
 @Injectable()
 export class UserSignUpUseCase
   implements BaseUseCase<Pick<UserDTO, 'email' | 'password'>, Promise<UserDTO>>
 {
   constructor(
-    private readonly findUser: FindUserPort,
+    @Inject(FIND_USER_BY_EMAIL_PORT)
+    private readonly findUser: FindUserByEmailPort,
+    @Inject(CREATE_USER_PORT)
     private readonly createUser: CreateUserPort,
+    @Inject(HASHER_INTERFACE)
     private readonly hasher: Hasher,
   ) {}
 

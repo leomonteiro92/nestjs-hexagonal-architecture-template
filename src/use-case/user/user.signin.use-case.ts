@@ -1,21 +1,26 @@
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 
-import { HashComparator } from 'src/core/cryptography'
+import { HashComparator, HASHER_INTERFACE } from 'src/core/cryptography'
 import { BusinessException } from 'src/core/exception'
 import { UserDTO } from 'src/core/user'
+import {
+  FindUserByEmailPort,
+  FIND_USER_BY_EMAIL_PORT,
+} from 'src/core/user/ports/find-user-by-email.port'
 import { BaseUseCase } from '../base.use-case'
-import { FindUserPort } from './ports/find-user.port'
 
 @Injectable()
 export class UserSignInUseCase
-  implements BaseUseCase<UserDTO, Promise<UserDTO>>
+  implements BaseUseCase<Pick<UserDTO, 'email' | 'password'>, Promise<UserDTO>>
 {
   constructor(
-    private readonly findUser: FindUserPort,
+    @Inject(FIND_USER_BY_EMAIL_PORT)
+    private readonly findUser: FindUserByEmailPort,
+    @Inject(HASHER_INTERFACE)
     private readonly hashComparator: HashComparator,
   ) {}
 
-  async execute(params: UserDTO): Promise<UserDTO> {
+  async execute(params: Pick<UserDTO, 'email' | 'password'>): Promise<UserDTO> {
     const { email, password } = params
     const existingUser = await this.findUser.execute(email)
 
