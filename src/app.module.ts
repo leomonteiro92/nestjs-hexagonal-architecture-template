@@ -12,6 +12,7 @@ import { DatabaseModule } from './infra/modules/database/database.module'
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: '.development.env',
       load: [configuration],
     }),
     DatabaseModule,

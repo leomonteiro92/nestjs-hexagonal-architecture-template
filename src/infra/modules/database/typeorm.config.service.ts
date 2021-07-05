@@ -16,7 +16,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
         username: this.config.get<string>('database.username'),
         password: this.config.get<string>('database.password'),
         database: this.config.get<string>('database.name'),
-        entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        entities: ['dist/**/*.entity{.ts,.js}'],
         synchronize: true,
       }
     } else {
@@ -26,6 +26,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
         secretArn: this.config.get<string>('database.secretArn'),
         resourceArn: this.config.get<string>('database.resourceArn'),
         region: this.config.get<string>('database.region'),
+        entities: ['dist/**/*.entity{.ts,.js}'],
         synchronize: false,
       }
     }
