@@ -1,14 +1,17 @@
 import { assert } from 'console'
 import { Test, TestingModule } from '@nestjs/testing'
-import { INestApplication } from '@nestjs/common'
 import * as request from 'supertest'
 import { AppModule } from 'src/app.module'
-import { Repository } from 'typeorm'
-import { UserEntity } from 'src/infra/database/user'
-import { getRepositoryToken } from '@nestjs/typeorm'
+import { Connection, Repository } from 'typeorm'
+import { UserEntity, UserRepository } from 'src/infra/database/user'
+import {
+  FastifyAdapter,
+  NestFastifyApplication,
+} from '@nestjs/platform-fastify'
 
 describe('AppController (e2e)', () => {
-  let app: INestApplication
+  let app: NestFastifyApplication
+  let conn: Connection
   let repository: Repository<UserEntity>
 
   beforeEach(async () => {
@@ -16,26 +19,37 @@ describe('AppController (e2e)', () => {
       imports: [AppModule],
     }).compile()
 
-    app = moduleFixture.createNestApplication()
-    repository = moduleFixture.get<Repository<UserEntity>>(
-      getRepositoryToken(UserEntity),
+    app = moduleFixture.createNestApplication<NestFastifyApplication>(
+      new FastifyAdapter(),
     )
+    conn = moduleFixture.get<Connection>(Connection)
+    repository = moduleFixture.get<UserRepository>(UserRepository)
     await app.init()
   })
 
-  it('/users/signup (GET) should return 200', (done) => {
+  afterEach(() => {
+    repository.clear()
+  })
+
+  afterAll(() => {
+    conn.close()
+    app.close()
+  })
+
+  it('/users/signup (GET) should return 200', async (done) => {
     const testEmail = 'test@example.com'
-    return request(app.getHttpServer())
-      .post('/users/signup')
-      .send({
+    const res = await app.inject({
+      method: 'POST',
+      url: '/users/signup',
+      payload: {
         email: testEmail,
         password: '123456',
-      })
-      .expect(200)
-      .then(({ body }) => {
-        assert(body.email, testEmail)
-        done()
-      })
+      },
+    })
+    expect(res.statusCode).toEqual(201)
+    const body = JSON.parse(res.body)
+    expect(body.email).toEqual(testEmail)
+    done()
   })
 
   it('/users/signup (GET) with email existing should return 400', async (done) => {
@@ -44,16 +58,17 @@ describe('AppController (e2e)', () => {
       password: '',
       blocked: false,
     })
-    return request(app.getHttpServer())
-      .post('/users/signup')
-      .send({
+    const res = await app.inject({
+      method: 'POST',
+      url: '/users/signup',
+      payload: {
         email: existingUser.email,
         password: existingUser.password,
-      })
-      .expect(400)
-      .expect(({ body }) => {
-        assert(body.message, 'Username already picked')
-        done()
-      })
+      },
+    })
+    expect(res.statusCode).toEqual(400)
+    const body = JSON.parse(res.body)
+    expect(body.message).toEqual('Username already picked')
+    done()
   })
 })
