@@ -1,5 +1,5 @@
 import { Exclude, Expose } from 'class-transformer'
-import { IsBoolean, IsEmail } from 'class-validator'
+import { IsEmail } from 'class-validator'
 import { User } from './user.model'
 
 @Exclude()

@@ -11,7 +11,7 @@ import { Interactor } from '../base.interactor'
 import { HashComparator, HASHER_INTERFACE } from '../cryptography'
 
 @Injectable()
-export class LoginUseCase
+export class LoginInteractor
   implements
     Interactor<Pick<User, 'email' | 'password'>, Promise<AuthenticationDTO>>
 {

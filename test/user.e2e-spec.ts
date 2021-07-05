@@ -1,6 +1,4 @@
-import { assert } from 'console'
 import { Test, TestingModule } from '@nestjs/testing'
-import * as request from 'supertest'
 import { AppModule } from 'src/app.module'
 import { Connection, Repository } from 'typeorm'
 import { UserEntity, UserRepository } from 'src/infra/database/user'

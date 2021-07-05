@@ -4,7 +4,7 @@ import { PassportModule } from '@nestjs/passport'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { UserRepository } from 'src/infra/database/user'
 import { AuthenticationController } from 'src/presentation/authentication'
-import { LoginUseCase } from 'src/use-case/authentication/login.interactor'
+import { LoginInteractor } from 'src/use-case/authentication/login.interactor'
 import { ConfigService } from '@nestjs/config'
 import { UserModule } from '../user/user.module'
 import { CryptographyModule } from '../cryptography'
@@ -24,7 +24,7 @@ import { JwtStrategy } from './jwt.strategy'
     }),
     TypeOrmModule.forFeature([UserRepository]),
   ],
-  providers: [JwtStrategy, LoginUseCase],
+  providers: [JwtStrategy, LoginInteractor],
   controllers: [AuthenticationController],
 })
 export class AuthenticationModule {}
