@@ -5,9 +5,9 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { UserRepository } from 'src/infra/database/user'
 import { AuthenticationController } from 'src/presentation/authentication'
 import { LoginUseCase } from 'src/use-case/authentication/login.interactor'
+import { ConfigService } from '@nestjs/config'
 import { UserModule } from '../user/user.module'
 import { CryptographyModule } from '../cryptography'
-import { JWT_EXPIRES_IN, JWT_SECRET } from './constants'
 import { JwtStrategy } from './jwt.strategy'
 
 @Module({
@@ -15,9 +15,12 @@ import { JwtStrategy } from './jwt.strategy'
     CryptographyModule,
     UserModule,
     PassportModule,
-    JwtModule.register({
-      secret: JWT_SECRET,
-      signOptions: { expiresIn: JWT_EXPIRES_IN },
+    JwtModule.registerAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        secret: config.get<string>('jwtSecret'),
+        signOptions: { expiresIn: config.get<string>('jwtExpiresIn') },
+      }),
     }),
     TypeOrmModule.forFeature([UserRepository]),
   ],
