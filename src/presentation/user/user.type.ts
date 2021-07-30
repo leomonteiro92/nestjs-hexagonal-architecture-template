@@ -2,7 +2,7 @@ import { Field, GraphQLISODateTime, ID, ObjectType } from '@nestjs/graphql'
 
 import { User } from 'src/core/user'
 
-@ObjectType()
+@ObjectType('User')
 export class UserType implements Omit<User, 'password'> {
   @Field()
   email: string

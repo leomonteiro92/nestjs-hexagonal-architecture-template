@@ -2,7 +2,7 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type UserType {
+type User {
   email: String!
   blocked: Boolean
   id: ID!
@@ -16,6 +16,6 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Query {
-  getInfo(email: String!): UserType!
-  me: UserType!
+  getInfo(email: String!): User!
+  me: User!
 }
