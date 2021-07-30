@@ -1,6 +1,5 @@
 import { UnauthorizedException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
-import { BusinessException } from 'src/core/exception'
 import { FindUserByEmailGateway, User } from 'src/core/user'
 import { HashComparator } from '../cryptography'
 import { LoginInteractor } from './login.interactor'
